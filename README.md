@@ -29,7 +29,9 @@ pip install podsearch
 ## Development setup
 
 ```sh
-$ pip install black coverage flake8 mccabe mypy pylint pytest tox
+$ python3 -m venv env
+$ . env/bin/activate
+$ make deps
 $ tox
 ```
 
