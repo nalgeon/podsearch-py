@@ -24,8 +24,8 @@ pip install podsearch
 ## Development setup
 
 ```sh
-$ pip install black pytest
-$ pytest -ra
+$ pip install black coverage flake8 mccabe mypy pylint pytest tox
+$ tox
 ```
 
 ## Contributing
