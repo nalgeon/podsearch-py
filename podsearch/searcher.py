@@ -2,10 +2,7 @@
 
 from dataclasses import dataclass
 from typing import List, Optional
-import json
-import urllib.request
-import urllib.parse
-from urllib.error import HTTPError, URLError
+from podsearch import http
 
 SEARCH_URL = "https://itunes.apple.com/search"
 URL_TEMPLATE = "https://podcasts.apple.com/us/podcast/id{}"
@@ -16,7 +13,7 @@ class Podcast:
     """Podcast metadata."""
 
     # see https://github.com/schemaorg/schemaorg/issues/373
-    id: str
+    id: str  # pylint: disable=invalid-name
     name: str
     author: str
     url: str
@@ -27,23 +24,13 @@ class Podcast:
 
 def search(name: str, limit: int = 5) -> List[Podcast]:
     """Search podcast by name."""
-    params = {"term": name, "limit": limit, "media": "podcast"}
-    response = _get(url=SEARCH_URL, params=params)
+    params = {
+        "term": name,
+        "limit": limit,
+        "media": "podcast",
+    }
+    response = http.get(url=SEARCH_URL, params=params)
     return _parse(response)
-
-
-def _get(url: str, params: Optional[dict] = None) -> dict:
-    try:
-        qs = urllib.parse.urlencode(params or {})
-        req = urllib.request.Request(f"{url}?{qs}")
-        with urllib.request.urlopen(req) as response:
-            return json.loads(response.read())
-    except HTTPError as exc:
-        raise Exception(f"HTTP error {exc.code}: {exc.reason}")
-    except URLError as exc:
-        raise Exception(f"Network error: {exc.reason}")
-    except json.JSONDecodeError as exc:
-        raise Exception(f"Failed to parse response: {exc}")
 
 
 def _parse(response: dict) -> List[Podcast]:

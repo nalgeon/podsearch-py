@@ -1,11 +1,10 @@
 from unittest.mock import patch
-from urllib.error import HTTPError
 import pytest
 import podsearch
 
 
 def test_search():
-    with patch("podsearch.searcher._get") as mock:
+    with patch("podsearch.http.get") as mock:
         mock.return_value = {
             "resultCount": 2,
             "results": [
@@ -43,16 +42,21 @@ def test_search():
 
 
 def test_nothing_found():
-    with patch("podsearch.searcher._get") as mock:
-        mock.return_value = {"resultCount": 1, "results": []}
+    with patch("podsearch.http.get") as mock:
+        mock.return_value = {"resultCount": 0, "results": []}
         podcasts = podsearch.search("Python")
         assert len(podcasts) == 0
 
 
 def test_failed():
-    with patch("podsearch.searcher._get") as mock:
-        mock.side_effect = HTTPError(
-            "https://itunes.apple.com/search", 503, "Service Unavailable", {}, None
-        )
+    with patch("podsearch.http.get") as mock:
+        mock.side_effect = Exception()
+        with pytest.raises(Exception):
+            podsearch.search("Python")
+
+
+def test_parsing_failed():
+    with patch("podsearch.http.get") as mock:
+        mock.return_value = {"resultCount": 1, "results": [{"collectionId": 979020229}]}
         with pytest.raises(Exception):
             podsearch.search("Python")
