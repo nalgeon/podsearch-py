@@ -1,4 +1,4 @@
-# Podast searcher
+# Podcast searcher
 
 > Search any podcast by name
 
