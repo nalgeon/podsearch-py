@@ -16,6 +16,8 @@ def test_search():
                     "feedUrl": "https://talkpython.fm/episodes/rss",
                     "primaryGenreName": "Technology",
                     "artworkUrl600": "https://whatever/image/979020229.png",
+                    "trackCount": 26,
+                    "country": "USA",
                 },
                 {
                     "collectionId": 981834425,
@@ -25,6 +27,8 @@ def test_search():
                     "feedUrl": "https://www.podcastinit.com/feed/mp3/",
                     "primaryGenreName": "Technology",
                     "artworkUrl600": "https://whatever/image/981834425.png",
+                    "trackCount": 16,
+                    "country": "USA",
                 },
             ],
         }
@@ -39,6 +43,26 @@ def test_search():
         assert talkpython.feed == "https://talkpython.fm/episodes/rss"
         assert talkpython.category == "Technology"
         assert talkpython.image == "https://whatever/image/979020229.png"
+        assert talkpython.country == "USA"
+        assert talkpython.episode_count == 26
+
+
+def test_search_defaults():
+    with patch("podsearch.http.get") as mock:
+        podsearch.search("Python")
+        mock.assert_called_with(
+            url=podsearch.searcher.SEARCH_URL,
+            params={"term": "Python", "limit": 5, "media": "podcast"},
+        )
+
+
+def test_search_params():
+    with patch("podsearch.http.get") as mock:
+        podsearch.search("Python", country="us", limit=10)
+        mock.assert_called_with(
+            url=podsearch.searcher.SEARCH_URL,
+            params={"term": "Python", "country": "us", "limit": 10, "media": "podcast"},
+        )
 
 
 def test_nothing_found():

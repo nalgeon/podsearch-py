@@ -1,11 +1,31 @@
 # Podcast searcher
 
-> Search any podcast by name
+> Search any podcast in iTunes library
 
 [![PyPI Version][pypi-image]][pypi-url]
 [![Build Status][build-image]][build-url]
 [![Code Coverage][coverage-image]][coverage-url]
 [![Code Quality][quality-image]][quality-url]
+
+`podsearch` finds podcasts via [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html).
+
+Search parameters:
+
+- *query* - search string (name, author etc)
+- *country* - ISO alpha-2 country code (us, de, fr etc), default: all countries
+- *limit* - maximum number or search results, default: 5
+
+Returned attributes for each podcast:
+
+- *id* - iTunes ID (e.g., `979020229`)
+- *name* - podcast name (`Talk Python To Me`)
+- *author* - author name (`Michael Kennedy (@mkennedy)`)
+- *url* - Apple Podcasts URL (`https://podcasts.apple.com/us/podcast/id979020229`)
+- *feed* - podcast RSS URL (`https://talkpython.fm/episodes/rss`)
+- *category* - main category (`Technology`)
+- *image* - 600x600px image URL (`https://is4-ssl.mzstatic.com/image/.../600x600bb.jpg`)
+- *country* - ISO alpha-3 country code (`USA`)
+- *episode_count* - episode count this year (`26`)
 
 ## Installation
 
@@ -17,7 +37,7 @@ pip install podsearch
 
 ```python
 >>> import podsearch
->>> podcasts = podsearch.search("python")
+>>> podcasts = podsearch.search("python", country="us", limit=10)
 >>> podcasts[0].name
 'Talk Python To Me'
 >>> podcasts[0].author
