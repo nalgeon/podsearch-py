@@ -35,6 +35,8 @@ pip install podsearch
 
 ## Usage
 
+Search podcasts by query:
+
 ```python
 >>> import podsearch
 >>> podcasts = podsearch.search("python", country="us", limit=10)
@@ -44,6 +46,15 @@ pip install podsearch
 'Michael Kennedy (@mkennedy)'
 >>> podcasts[0].url
 'https://podcasts.apple.com/us/podcast/id979020229'
+```
+
+Retrieve podcast by iTunes ID:
+
+```python
+>>> import podsearch
+>>> podcast = podsearch.get(979020229)
+>>> podcast.name
+'Talk Python To Me'
 ```
 
 ## Development setup

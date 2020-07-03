@@ -8,7 +8,9 @@ from dataclasses import dataclass
 from typing import List, Optional
 from podsearch import http
 
-SEARCH_URL = "https://itunes.apple.com/search"
+BASE_URL = "https://itunes.apple.com"
+SEARCH_URL = f"{BASE_URL}/search"
+GET_URL = f"{BASE_URL}/lookup"
 URL_TEMPLATE = "https://podcasts.apple.com/us/podcast/id{}"
 
 
@@ -18,7 +20,7 @@ class Podcast:
     """Podcast metadata."""
 
     # see https://github.com/schemaorg/schemaorg/issues/373
-    id: str  # pylint: disable=invalid-name
+    id: int  # pylint: disable=invalid-name
     name: str
     author: str
     url: str
@@ -27,6 +29,46 @@ class Podcast:
     image: Optional[str] = None
     country: Optional[str] = None
     episode_count: Optional[int] = None
+
+
+# pylint: disable=too-few-public-methods
+class ItunesPodcast:
+    """iTunes podcast description."""
+
+    def __init__(self, source: dict):
+        self._source = source
+
+    def as_podcast(self) -> Podcast:
+        """Converts iTunes description to Podcast object."""
+
+        id_ = self._source["collectionId"]
+        name = self._source["collectionName"]
+        author = self._source["artistName"]
+        url = URL_TEMPLATE.format(id_)
+        podcast = Podcast(id=id_, name=name, author=author, url=url)
+        podcast.feed = self._source.get("feedUrl")
+        podcast.category = self._source.get("primaryGenreName")
+        podcast.image = self._source.get("artworkUrl600")
+        podcast.country = self._source.get("country")
+        podcast.episode_count = self._source.get("trackCount")
+        return podcast
+
+
+class ItunesResults:
+    """iTunes search results collection."""
+
+    def __init__(self, source: dict):
+        self.items = source.get("results", [])
+
+    def as_podcasts(self) -> List[Podcast]:
+        """Converts iTunes search results to Podcast list."""
+
+        podcast_items = filter(ItunesResults._is_podcast, self.items)
+        return [ItunesPodcast(item).as_podcast() for item in podcast_items]
+
+    @staticmethod
+    def _is_podcast(item):
+        return item.get("wrapperType") == "track" and item.get("kind") == "podcast"
 
 
 def search(query: str, country: str = "us", limit: int = 5) -> List[Podcast]:
@@ -41,28 +83,13 @@ def search(query: str, country: str = "us", limit: int = 5) -> List[Podcast]:
 
     params = {"term": query, "country": country, "limit": limit, "media": "podcast"}
     response = http.get(url=SEARCH_URL, params=params)
-    return _parse(response)
+    return ItunesResults(response).as_podcasts()
 
 
-def _parse(response: dict) -> List[Podcast]:
-    result_count = response.get("resultCount")
-    if not result_count:
-        return []
-    return [_parse_item(item) for item in response.get("results", [])]
+def get(ident: int) -> Optional[Podcast]:
+    """Get podcast by iTunes ID."""
 
-
-def _parse_item(item: dict) -> Podcast:
-    try:
-        id_ = str(item["collectionId"])
-        name = item["collectionName"]
-        author = item["artistName"]
-        url = URL_TEMPLATE.format(id_)
-        podcast = Podcast(id=id_, name=name, author=author, url=url)
-        podcast.feed = item.get("feedUrl")
-        podcast.category = item.get("primaryGenreName")
-        podcast.image = item.get("artworkUrl600")
-        podcast.country = item.get("country")
-        podcast.episode_count = item.get("trackCount")
-        return podcast
-    except LookupError as exc:
-        raise Exception(f"Failed to parse podcast item: {exc}\n{item}")
+    params = {"id": ident}
+    response = http.get(url=GET_URL, params=params)
+    podcasts = ItunesResults(response).as_podcasts()
+    return podcasts[0] if podcasts else None

@@ -9,6 +9,8 @@ def test_search():
             "resultCount": 2,
             "results": [
                 {
+                    "wrapperType": "track",
+                    "kind": "podcast",
                     "collectionId": 979020229,
                     "artistName": "Michael Kennedy (@mkennedy)",
                     "collectionName": "Talk Python To Me",
@@ -20,6 +22,8 @@ def test_search():
                     "country": "USA",
                 },
                 {
+                    "wrapperType": "track",
+                    "kind": "podcast",
                     "collectionId": 981834425,
                     "artistName": "Tobias Macey",
                     "collectionName": "The Python Podcast.__init__",
@@ -36,7 +40,7 @@ def test_search():
         podcasts = podsearch.search("Python")
         assert len(podcasts) == 2
         talkpython = podcasts[0]
-        assert talkpython.id == "979020229"
+        assert talkpython.id == 979020229
         assert talkpython.name == "Talk Python To Me"
         assert talkpython.author == "Michael Kennedy (@mkennedy)"
         assert talkpython.url == "https://podcasts.apple.com/us/podcast/id979020229"
@@ -81,6 +85,9 @@ def test_failed():
 
 def test_parsing_failed():
     with patch("podsearch.http.get") as mock:
-        mock.return_value = {"resultCount": 1, "results": [{"collectionId": 979020229}]}
+        mock.return_value = {
+            "resultCount": 1,
+            "results": [{"wrapperType": "track", "kind": "podcast", "collectionId": 979020229}],
+        }
         with pytest.raises(Exception):
             podsearch.search("Python")
