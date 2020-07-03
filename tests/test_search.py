@@ -52,7 +52,7 @@ def test_search_defaults():
         podsearch.search("Python")
         mock.assert_called_with(
             url=podsearch.searcher.SEARCH_URL,
-            params={"term": "Python", "limit": 5, "media": "podcast"},
+            params={"term": "Python", "country": "us", "limit": 5, "media": "podcast"},
         )
 
 

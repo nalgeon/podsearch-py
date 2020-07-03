@@ -29,7 +29,7 @@ class Podcast:
     episode_count: Optional[int] = None
 
 
-def search(query: str, country: str = None, limit: int = 5) -> List[Podcast]:
+def search(query: str, country: str = "us", limit: int = 5) -> List[Podcast]:
     """
     Search podcast by query.
 
@@ -39,9 +39,7 @@ def search(query: str, country: str = None, limit: int = 5) -> List[Podcast]:
     limit   -- max number or search results
     """
 
-    params = {"term": query, "limit": limit, "media": "podcast"}
-    if country:
-        params["country"] = country
+    params = {"term": query, "country": country, "limit": limit, "media": "podcast"}
     response = http.get(url=SEARCH_URL, params=params)
     return _parse(response)
 

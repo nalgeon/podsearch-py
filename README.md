@@ -12,7 +12,7 @@
 Search parameters:
 
 - *query* - search string (name, author etc)
-- *country* - ISO alpha-2 country code (us, de, fr etc), default: all countries
+- *country* - ISO alpha-2 country code (us, de, fr etc), default: us
 - *limit* - maximum number or search results, default: 5
 
 Returned attributes for each podcast:
