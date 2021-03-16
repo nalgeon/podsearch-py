@@ -18,8 +18,8 @@ def get(url: str, params: Optional[dict] = None,) -> dict:
         with urllib.request.urlopen(req) as response:
             return json.loads(response.read())
     except HTTPError as exc:
-        raise Exception(f"HTTP error {exc.code}: {exc.reason}")
+        raise Exception(f"HTTP error {exc.code}: {exc.reason}") from exc
     except URLError as exc:
-        raise Exception(f"Network error: {exc.reason}")
+        raise Exception(f"Network error: {exc.reason}") from exc
     except json.JSONDecodeError as exc:
-        raise Exception(f"Failed to parse response: {exc}")
+        raise Exception(f"Failed to parse response: {exc}") from exc
