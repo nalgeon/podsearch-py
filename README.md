@@ -11,21 +11,21 @@
 
 Search parameters:
 
-- *query* - search string (name, author etc)
-- *country* - ISO alpha-2 country code (us, de, fr etc), default: us
-- *limit* - maximum number or search results, default: 5
+-   _query_ - search string (name, author etc)
+-   _country_ - ISO alpha-2 country code (us, de, fr etc), default: us
+-   _limit_ - maximum number or search results, default: 5
 
 Returned attributes for each podcast:
 
-- *id* - iTunes ID (e.g., `979020229`)
-- *name* - podcast name (`Talk Python To Me`)
-- *author* - author name (`Michael Kennedy (@mkennedy)`)
-- *url* - Apple Podcasts URL (`https://podcasts.apple.com/us/podcast/id979020229`)
-- *feed* - podcast RSS URL (`https://talkpython.fm/episodes/rss`)
-- *category* - main category (`Technology`)
-- *image* - 600x600px image URL (`https://is4-ssl.mzstatic.com/image/.../600x600bb.jpg`)
-- *country* - ISO alpha-3 country code (`USA`)
-- *episode_count* - episode count this year (`26`)
+-   _id_ - iTunes ID (e.g., `979020229`)
+-   _name_ - podcast name (`Talk Python To Me`)
+-   _author_ - author name (`Michael Kennedy (@mkennedy)`)
+-   _url_ - Apple Podcasts URL (`https://podcasts.apple.com/us/podcast/id979020229`)
+-   _feed_ - podcast RSS URL (`https://talkpython.fm/episodes/rss`)
+-   _category_ - main category (`Technology`)
+-   _image_ - 600x600px image URL (`https://is4-ssl.mzstatic.com/image/.../600x600bb.jpg`)
+-   _country_ - ISO alpha-3 country code (`USA`)
+-   _episode_count_ - episode count this year (`26`)
 
 ## Installation
 
@@ -82,11 +82,11 @@ Use [Black](https://black.readthedocs.io/en/stable/) for code formatting and [Co
 
 <!-- Badges -->
 
-[pypi-image]: https://img.shields.io/pypi/v/podsearch?style=flat-square
+[pypi-image]: https://img.shields.io/pypi/v/podsearch
 [pypi-url]: https://pypi.org/project/podsearch/
-[build-image]: https://img.shields.io/travis/nalgeon/podsearch-py?style=flat-square
-[build-url]: https://travis-ci.org/nalgeon/podsearch-py
-[coverage-image]: https://img.shields.io/coveralls/github/nalgeon/podsearch-py?style=flat-square
-[coverage-url]: https://coveralls.io/github/nalgeon/podsearch-py
-[quality-image]: https://img.shields.io/codeclimate/maintainability/nalgeon/podsearch-py?style=flat-square
+[build-image]: https://github.com/nalgeon/podsearch-py/actions/workflows/build.yml/badge.svg
+[build-url]: https://github.com/nalgeon/podsearch-py/actions/workflows/build.yml
+[coverage-image]: https://codecov.io/gh/nalgeon/podsearch-py/branch/master/graph/badge.svg
+[coverage-url]: https://codecov.io/gh/nalgeon/podsearch-py
+[quality-image]: https://api.codeclimate.com/v1/badges/3130fa0ba3b7993fbf0a/maintainability
 [quality-url]: https://codeclimate.com/github/nalgeon/podsearch-py
