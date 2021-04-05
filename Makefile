@@ -7,7 +7,8 @@ coverage:  ## Run tests with coverage
 	coverage report -m
 
 deps:  ## Install dependencies
-	pip install black coverage flake8 mccabe mypy pylint pytest tox
+	python -m pip install --upgrade pip
+	python -m pip install black coverage flake8 mccabe mypy pylint pytest tox
 
 lint:  ## Lint and static-check
 	flake8 podsearch
@@ -19,6 +20,9 @@ push:  ## Push code with tags
 
 test:  ## Run tests
 	pytest -ra
+
+tox:
+	tox
 
 help: ## Show help message
 	@IFS=$$'\n' ; \
