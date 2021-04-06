@@ -1,28 +1,31 @@
 .DEFAULT_GOAL := help
-.PHONY: coverage deps help lint push test tox
+.PHONY: coverage deps help lint publish push test tox
 
 coverage:  ## Run tests with coverage
-	coverage erase
-	coverage run --include=podsearch/* -m pytest -ra
-	coverage report -m
+	python -m coverage erase
+	python -m coverage run --include=podsearch/* -m pytest -ra
+	python -m coverage report -m
 
 deps:  ## Install dependencies
 	python -m pip install --upgrade pip
 	python -m pip install black coverage flake8 flit mccabe mypy pylint pytest tox
 
 lint:  ## Lint and static-check
-	flake8 podsearch
-	pylint podsearch
-	mypy podsearch
+	python -m flake8 podsearch
+	python -m pylint podsearch
+	python -m mypy podsearch
+
+publish:  ## Publish to PyPi
+	python -m flit publish
 
 push:  ## Push code with tags
 	git push && git push --tags
 
 test:  ## Run tests
-	pytest -ra
+	python -m pytest -ra
 
-tox:
-	tox
+tox:   ## Run tox
+	python -m tox
 
 help: ## Show help message
 	@IFS=$$'\n' ; \
