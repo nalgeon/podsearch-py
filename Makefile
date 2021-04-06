@@ -8,7 +8,7 @@ coverage:  ## Run tests with coverage
 
 deps:  ## Install dependencies
 	python -m pip install --upgrade pip
-	python -m pip install black coverage flake8 mccabe mypy pylint pytest tox
+	python -m pip install black coverage flake8 flit mccabe mypy pylint pytest tox
 
 lint:  ## Lint and static-check
 	flake8 podsearch
