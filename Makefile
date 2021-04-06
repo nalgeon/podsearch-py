@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: changelog coverage deps help lint push test
+.PHONY: coverage deps help lint push test tox
 
 coverage:  ## Run tests with coverage
 	coverage erase
