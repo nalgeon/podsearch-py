@@ -10,7 +10,7 @@ from urllib.error import (
 )
 
 
-def get(url: str, params: Optional[dict] = None,) -> dict:
+def get(url: str, params: Optional[dict] = None) -> dict:
     """Perform HTTP GET request and return response as JSON"""
     try:
         query_str = urllib.parse.urlencode(params or {})
