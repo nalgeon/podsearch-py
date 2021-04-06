@@ -1,3 +1,7 @@
+# 0.3.1 (2021-04-06)
+
+Switched from Travis CI to Github Actions. Otherwise, nothing changed.
+
 # 0.3.0 (2020-07-03)
 
 ### Features
