@@ -2,11 +2,6 @@
 
 > Search any podcast in iTunes library
 
-[![PyPI Version][pypi-image]][pypi-url]
-[![Build Status][build-image]][build-url]
-[![Code Coverage][coverage-image]][coverage-url]
-[![Code Quality][quality-image]][quality-url]
-
 `podsearch` finds podcasts via [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html).
 
 Search parameters:
@@ -66,27 +61,6 @@ $ make deps
 $ tox
 ```
 
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Make sure to add or update tests as appropriate.
-
-Use [Black](https://black.readthedocs.io/en/stable/) for code formatting and [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/) for commit messages.
-
-## [Changelog](CHANGELOG.md)
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
-<!-- Badges -->
-
-[pypi-image]: https://img.shields.io/pypi/v/podsearch
-[pypi-url]: https://pypi.org/project/podsearch/
-[build-image]: https://github.com/nalgeon/podsearch-py/actions/workflows/build.yml/badge.svg
-[build-url]: https://github.com/nalgeon/podsearch-py/actions/workflows/build.yml
-[coverage-image]: https://codecov.io/gh/nalgeon/podsearch-py/branch/main/graph/badge.svg
-[coverage-url]: https://codecov.io/gh/nalgeon/podsearch-py
-[quality-image]: https://api.codeclimate.com/v1/badges/3130fa0ba3b7993fbf0a/maintainability
-[quality-url]: https://codeclimate.com/github/nalgeon/podsearch-py
